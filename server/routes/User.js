@@ -6,8 +6,8 @@ const JWT = require('jsonwebtoken');//used to sign the tokens used by passport-j
 const passportConfig = require('../passport');
 const User = require('../models/User');
 //keys
-const mySecret = require("../../config/keys").secretOrKey || process.env.secretOrKey;
-const atkName = require("../../config/keys").accessToken || process.env.accessToken;
+const mySecret =  process.env.secretOrKey || require("../../config/keys").secretOrKey;
+const atkName =  process.env.accessToken || require("../../config/keys").accessToken;
 
 const ServerSentEvents = require('../ServerSentEvents').instance;
 const eventTypes = require('../ServerSentEvents').eventTypes;

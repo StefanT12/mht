@@ -8,8 +8,8 @@ const Suggestion = require('../models/Suggestion');
 const ServerSentEvents = require('../ServerSentEvents').instance;
 const eventTypes = require('../ServerSentEvents').eventTypes;
 //keys
-const mySecret = require("../../config/keys").secretOrKey || process.env.secretOrKey;
-const atkName = require("../../config/keys").accessToken || process.env.accessToken;
+const mySecret = process.env.secretOrKey || require("../../config/keys").secretOrKey;
+const atkName = process.env.accessToken || require("../../config/keys").accessToken;
 
 const suggestionRouter = express.Router();
 

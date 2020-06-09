@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(urlencodedParser) // This will parse the body and make it available for routes to use
 
 // DB Config
-const db = require("../config/keys").mongoURI;
+const db = process.env.mongoURI || require("../config/keys").mongoURI;
 
 // Connect to MongoDB
 mongoose

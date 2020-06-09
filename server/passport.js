@@ -4,8 +4,8 @@ const jwtStrategy = require('passport-jwt').Strategy;
 const userDoc = require('./models/User');
 
 //keys
-const mySecret = require("../config/keys").secretOrKey;
-const atkName = require("../config/keys").accessToken;
+const mySecret = process.env.secretOrKey || require("../config/keys").secretOrKey;
+const atkName = process.env.accessToken || require("../config/keys").accessToken;
 
 const cookieExtractor = req =>{
     let token = null;
