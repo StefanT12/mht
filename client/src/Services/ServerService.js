@@ -45,6 +45,8 @@ export default {
     openSSEConnection: ()=>{
         let opts = {withCredentials:true}
 
+        console.log(process.env.NODE_ENV);
+
         sse = new SSEFetcher('https://salty-spire-65056.herokuapp.com/api/server/events', opts);
         //sse = new SSEFetcher('http://localhost:8080/api/server/events', opts);
         
