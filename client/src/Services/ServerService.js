@@ -47,7 +47,7 @@ export default {
 
         let url = 'http://localhost:8080/api/server/events';
         if(process.env.NODE_ENV === 'Production'){
-            url = 'https://salty-spire-65056.herokuapp.com'
+            url = 'https://salty-spire-65056.herokuapp.com/api/server/events'
         }
         
         sse = new SSEFetcher(url, opts);
