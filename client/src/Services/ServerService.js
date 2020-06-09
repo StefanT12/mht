@@ -44,7 +44,13 @@ let conDate;
 export default {
     openSSEConnection: ()=>{
         let opts = {withCredentials:true}
-        sse = new SSEFetcher('http://localhost:8080/api/server/events', opts);
+
+        let url = 'http://localhost:8080/api/server/events';
+        if(process.env.NODE_ENV === 'Production'){
+            url = 'https://salty-spire-65056.herokuapp.com'
+        }
+        
+        sse = new SSEFetcher(url, opts);
         conDate = Date.now();
     },
     subscribe: (type, evtFunc, id)=>{
