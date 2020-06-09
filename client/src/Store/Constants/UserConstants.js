@@ -1,0 +1,18 @@
+export const AuthState = {
+    FALSE: '1',
+    INPROGRESS: '2',
+    TRUE: '3'
+}
+
+
+export const UserConstants = {
+    LOGIN_REQUEST: 'LOGIN_REQUEST',
+    LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+    LOGIN_FAILURE: 'LOGIN_FAILURE',
+
+    AUTHENTICATED: 'AUTHENTICATED',
+    UNAUTHORISED: 'UNAUTHORISED',
+    
+    LOGOUT: 'LOGOUT_REQUEST'
+   
+};
