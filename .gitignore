@@ -1,7 +1,7 @@
 # dependencies
 client/node_modules
 server/node_modules
-/node_modulesgit reset
+/node_modules
 # production
 client/build
 yarn-error.log*
