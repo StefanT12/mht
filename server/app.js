@@ -32,7 +32,7 @@ mongoose
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
 
-//routes
+//#region routes
 const userRouter = require('./routes/User');
 app.use('/api/user', userRouter);
 
@@ -41,6 +41,13 @@ app.use('/api/suggestion', suggestionRouter);
 
 const serverRouter = require('./routes/Server');
 app.use('/api/server', serverRouter);
+
+app.get('*', (request, response) =>
+    response.sendFile(path.resolve('..', 'client', 'build', 'index.html'))
+);
+//#endregion
+
+
 
 const port = process.env.PORT || 8080;
 //listen returns an http server instance we can use later for sockets
