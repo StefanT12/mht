@@ -16,22 +16,27 @@ class sseSingleton{
     clients = [];
     //we set up the header ahead of time
     subscribe(req, res, id){
+
+         //allow multiple origins by checking origin of request against allowed origins.
+         let headerOrigin = '';
+         let allowedOrigins = ['http://localhost:3000', 'https://salty-spire-65056.herokuapp.com'];
+         let origin = req.headers.origin;
+         if(allowedOrigins.indexOf(origin) > -1){
+            headerOrigin = origin; 
+            res.setHeader('Access-Control-Allow-Origin', origin);
+         }
+        
         // Mandatory headers and http status to keep connection open
         const headers = {
             'Content-Type': 'text/event-stream',
             'Connection': 'keep-alive',
             'Cache-Control': 'no-cache',
-            "Access-Control-Allow-Headers":"Content-Type, Allow, Authorization, X-Args",
+            'Access-Control-Allow-Headers':"Content-Type, Allow, Authorization, X-Args",
+            'Access-Control-Allow-Origin' : headerOrigin,
             'Access-Control-Allow-Credentials': "true"
         };
+        
         res.writeHead(200, headers);
-
-        //allow multiple origins by checking origin of request against allowed origins.
-        let allowedOrigins = ['http://localhost:3000', 'https://salty-spire-65056.herokuapp.com'];
-        let origin = req.headers.origin;
-        if(allowedOrigins.indexOf(origin) > -1){
-            res.setHeader('Access-Control-Allow-Origin', origin);
-        }
 
         res.flushHeaders();
         // save id and save res
