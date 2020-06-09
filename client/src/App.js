@@ -25,7 +25,7 @@ class App extends Component{
     //   this.setResponse(data);
     // });
 
-    
+    console.log(process.env.NODE_ENV);
   }
   
   setResponse = (data)=>{
