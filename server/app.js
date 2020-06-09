@@ -20,6 +20,11 @@ const urlencodedParser = bodyParser.urlencoded({extended : false});
 app.use(bodyParser.json());
 app.use(urlencodedParser) // This will parse the body and make it available for routes to use
 
+//provide our server the client
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('../client/build'))
+}
+
 // DB Config
 const db = process.env.mongoURI || require("../config/keys").mongoURI;
 
@@ -46,8 +51,6 @@ app.get('*', (request, response) =>
     response.sendFile(path.resolve('..', 'client', 'build', 'index.html'))
 );
 //#endregion
-
-
 
 const port = process.env.PORT || 8080;
 //listen returns an http server instance we can use later for sockets
