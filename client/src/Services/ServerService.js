@@ -45,12 +45,8 @@ export default {
     openSSEConnection: ()=>{
         let opts = {withCredentials:true}
 
-        if(process.env.NODE_ENV === 'Production'){
-            sse = new SSEFetcher('https://salty-spire-65056.herokuapp.com/api/server/events', opts);
-        }
-        else{
-            sse = new SSEFetcher('http://localhost:8080/api/server/events', opts);
-        }
+        sse = new SSEFetcher('https://salty-spire-65056.herokuapp.com/api/server/events', opts);
+        //sse = new SSEFetcher('http://localhost:8080/api/server/events', opts);
         
         conDate = Date.now();
     },
