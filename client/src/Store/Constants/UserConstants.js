@@ -4,6 +4,11 @@ export const AuthState = {
     TRUE: '3'
 }
 
+export const Role = {
+    ADMIN: 'admin',
+    USER: 'user',
+}
+
 
 export const UserConstants = {
     LOGIN_REQUEST: 'LOGIN_REQUEST',
@@ -13,6 +18,10 @@ export const UserConstants = {
     AUTHENTICATED: 'AUTHENTICATED',
     UNAUTHORISED: 'UNAUTHORISED',
     
-    LOGOUT: 'LOGOUT_REQUEST'
-   
+    LOGOUT: 'LOGOUT_REQUEST',
+
+    GETUSERS_REQUEST: 'GETUSERS_REQUEST',
+    GETUSERS_SUCCESS: 'GETUSERS_REQUEST',
+    GETUSERS_FAILURE: 'GETUSERS_FAILURE',
+    CLEARUSERS_REQUEST: 'CLEARUSERS_REQUEST'
 };

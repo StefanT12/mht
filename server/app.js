@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
+
+const path = require('path');
 //socket.io-realtime client-server through websockets, to be noted, its split into server and client
 /*
 Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
@@ -55,3 +57,5 @@ app.get('*', (request, response) =>
 const port = process.env.PORT || 8080;
 //listen returns an http server instance we can use later for sockets
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+
+

@@ -77,3 +77,45 @@ export const clearSuggestions = () =>{
         dispatch(clear());
     }
 }
+
+export const sendSignature = (fullname, suggestionId, reverse) =>{
+
+    const signingDetails = {
+        fullname, suggestionId
+    }
+
+    let response = {status: false, msg: ''}
+
+    return(dispatch, getState) => {
+        if(!reverse){
+            return SuggestionService.signSuggestion(signingDetails).then(data => {
+                response = data;
+                return response;
+            });
+        }
+        else{
+            return SuggestionService.unsignSuggestion(signingDetails).then(data => {
+                response = data;
+                return response;
+            });
+        }
+       
+    }
+}
+
+export const isSigned = (suggestionId) => {
+    return(dispatch, getState) => {
+        return SuggestionService.isSigned(suggestionId).then(data => {
+            return data;
+        });
+    }
+}
+
+export const processSignatureFromSSE = (signatureInfo, suggestion) =>{
+    console.log('toredux');
+    const sendFromSSE = () => {return { type: SuggestionConstants.PROCESSSIGNATURE_SSE, signatureInfo } }
+    return(dispatch, getState) => {
+       dispatch(sendFromSSE());
+    }
+}
+

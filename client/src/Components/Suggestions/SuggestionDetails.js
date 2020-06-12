@@ -1,25 +1,83 @@
-import React from 'react'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-const SuggestionDetails = (props) => {
+import {makeGetSuggestionById} from '../../Store/Selectors/SelectSuggestion'
+import SignSuggestion from './SignSuggestion';
+import {processSignatureFromSSE} from '../../Store/Actions/SuggestionActions';
+import {AuthState,Role} from '../../Store/Constants/UserConstants'
+import ServerService from '../../Services/ServerService';
+import SignatureList from './SignatureList';
+class SuggestionDetails extends Component {
     
-    const suggestionId = props.match.params.id;
+    componentDidMount(){
+        if(this.props.authState === AuthState.TRUE){
 
-    return (
-        <div className = 'container section suggestion-details'>
-            <div className='card z-depth-0'>
-                <div className='card-content'>
-                    <span className='card-title'>Suggestion X</span>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div>
-                    <div className='card-action lighten-4 grey-text'>
-                        <div>Posted by mH</div>
-                        <div>2nd September, 2AM</div>
+            ServerService.subscribe('UPDATE_SIGNATURES', (signatureInfo)=>{
+                this.props.processSignatureFromSSE(signatureInfo)},
+                'updatevotes');
+
+        }
+        else{
+            this.props.history.push('/signin');
+        }
+    }
+
+    componentWillUnmount(){
+        ServerService.unsubscribe('updatevotes');
+    }
+
+    render(){
+        let {suggestion} = this.props;
+        //test
+        if(!suggestion){
+            suggestion = { 
+                title: 'The work',
+                content: 'Asking questions and solving problems.',
+                postedByName: 'SS Furher John Doewitz', 
+                createdAt: '44 - 45'
+            }
+        }
+        const nrOfSignatures = suggestion.signatures? suggestion.signatures.length : 0;
+        const signaturesText = (nrOfSignatures < 1 || nrOfSignatures > 1) ? 'signatures' : 'signature';
+        return (
+            <div className = 'container section suggestion-details'>
+                <div className='card z-depth-0'>
+                    <div className='card-content'>
+                        <span className='card-title'>{suggestion.title} <span className = 'teal-text text-lighten-2'>({nrOfSignatures+ ' ' + signaturesText})</span></span>
+                        <p>{suggestion.content}</p>
+                        <br/>
+                        <SignatureList signatures={suggestion.signatures}/>
+                        <SignSuggestion suggestionId={suggestion.id} />
                     </div>
+                    <div>
+                        <div className='card-action lighten-4 grey-text'>
+                            <div>Posted by {suggestion.postedByName}</div>
+                            <div>{suggestion.createdAt}</div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
-        </div>
-    )
+        )
+        
+    }
+    
+}
+//cache the call, use memoization
+const getSuggestionById = makeGetSuggestionById();
+
+const mapStateToProps = (state,props) => {
+    return{
+        suggestion : getSuggestionById(state,props),
+        authState: state.auth.authState,
+        isAdmin: state.auth.role === Role.ADMIN
+    }
 }
 
-export default SuggestionDetails;
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        processSignatureFromSSE: (signatureInfo) => dispatch(processSignatureFromSSE(signatureInfo))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SuggestionDetails);

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');//db
 const bcrypt = require('bcrypt');//for hashing passwords
+const { someLimit } = require('async');
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -23,7 +24,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         min:2,
         max:15
-    }
+    },
+    role:{
+        type: String,
+        required: true,
+        min:2,
+        max:15
+    },
+    signedSuggestions: [{
+            suggestionId: {type:mongoose.Schema.Types.ObjectId, ref:'Suggestion'},
+            suggestionTitle: String
+        }]
 });
 
 userSchema.pre('save', function(next){
@@ -45,6 +56,18 @@ userSchema.methods.comparePassword = function(password, cb){
             return cb(null, this)
         }
     })
+}
+
+userSchema.methods.addSignedSuggestion = function(suggestion){
+    let signedSuggestion = {
+        suggestionId: suggestion._id,
+        suggestionTitle: suggestion.title
+    }
+
+    this.signedSuggestions.push(signedSuggestion);
+
+    console.log(this.signedSuggestions);
+
 }
 
 module.exports = mongoose.model('User', userSchema);

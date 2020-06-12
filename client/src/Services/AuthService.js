@@ -40,5 +40,15 @@ export default {
             else//default unauthorized response
                 return { isAuthenticated: false, user : {username:'', role:''}}
         });
+    },
+
+    isAdmin: ()=>{
+        return fetch('/api/user/isadmin')
+        .then(res=>{
+            if(res.status !== 401)//written already
+                return res.json().then(data => data);
+            else//default unauthorized response
+                return { isAdmin: false, user : {username:'', role:''}}
+        });
     }
 }

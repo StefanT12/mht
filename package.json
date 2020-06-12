@@ -8,14 +8,12 @@
     "start": "cd server && node app.js",
     "dev": "cd server && nodemon app.js",
     "start-client": "cd client && npm start",
-
     "preinstall": "cd server && npm install",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "build-start": "cd client && npm run build && cd ../server && node app.js",
     "install-all": "npm run-script install && npm run-script preinstall && npm run-script build-start",
     "heroku-postbuild": "cd client && npm install && npm run build"
-
   },
   "author": "Stefan",
   "license": "ISC",

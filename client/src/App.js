@@ -7,6 +7,7 @@ import SuggestionDetails from './Components/Suggestions/SuggestionDetails';
 import SignIn from './Components/Auth/SignIn';
 import SignUp from './Components/Auth/SignUp';
 import CreateSuggestion from './Components/Suggestions/CreateSuggestion';
+import Profile from './Components/User/Profile';
 
 import {connect} from 'react-redux';
 import {AuthState} from './Store/Constants/UserConstants';
@@ -44,6 +45,7 @@ class App extends Component{
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route path='/suggestion/:id' component={SuggestionDetails} />
+            <Route path='/profile/:id' component={Profile} />
             <Route  path='/signin' component={SignIn}/>
             <Route  path='/signup' component={SignUp}/>
             <Route  path='/createsuggestion' component={CreateSuggestion}/>

@@ -86,6 +86,7 @@ const i = new sseSingleton()
 
 const et = {
     UPDATE_STORE:'UPDATE_STORE',
+    UPDATE_SIGNATURES: 'UPDATE_SIGNATURES'
 }
 
 module.exports = {instance: i, eventTypes: et };
