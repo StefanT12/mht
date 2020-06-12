@@ -28,15 +28,7 @@ class SuggestionDetails extends Component {
 
     render(){
         let {suggestion} = this.props;
-        //test
-        if(!suggestion){
-            suggestion = { 
-                title: 'The work',
-                content: 'Asking questions and solving problems.',
-                postedByName: 'SS Furher John Doewitz', 
-                createdAt: '44 - 45'
-            }
-        }
+       
         const nrOfSignatures = suggestion.signatures? suggestion.signatures.length : 0;
         const signaturesText = (nrOfSignatures < 1 || nrOfSignatures > 1) ? 'signatures' : 'signature';
         return (

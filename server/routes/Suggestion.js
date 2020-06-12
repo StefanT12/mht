@@ -294,6 +294,12 @@ suggestionRouter.get('/suggestionissigned/:suggestionId', passport.authenticate(
     }
 });
 
+//EG of body for this post
+// {
+//     "suggestionId": "5ee2bb26fda4591fecf537e1",
+//     "modType": "hide",
+//     "data": ""
+// }
 suggestionRouter.post('/modify', passport.authenticate('jwt', {session: false}), (req,res)=>{
 
     if(req.user.role !== 'admin'){
@@ -312,11 +318,13 @@ suggestionRouter.post('/modify', passport.authenticate('jwt', {session: false}),
         }
         console.log(suggestionSearch)
         switch(modType){
+            
             case 'hide':
                 suggestionSearch.hidden = true;
             break;
+
             case 'delete':
-                Suggestion.findByIdAndDelete(oId, (err)=>{
+                Suggestion.remove((err)=>{
                     if(err){
                         console.log(err.message);
                     }
@@ -326,13 +334,15 @@ suggestionRouter.post('/modify', passport.authenticate('jwt', {session: false}),
                     }
                 });
             return;
+            
             case 'modify':
                 suggestionSearch.title = data.title;
                 suggestionSearch.body = data.body;
             break;
+            
             default:
                 res.status(400).json({status: false, msg: 'the modification type does not exist' });
-                return;
+            return;
         }
         
         suggestionSearch.save(err=>{
